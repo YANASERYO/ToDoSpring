@@ -37,7 +37,7 @@ public class ReservationEntity {
     private String taskUser;
 
     @Column(name = "task_status")
-    private boolean taskStatus;
+    private Integer taskStatus;
 
     @Column(name = "user_id")
     private String userId;
@@ -59,8 +59,8 @@ public class ReservationEntity {
     public void setTaskDelete(LocalDateTime taskDelete) { this.taskDelete = taskDelete; }
     public String getTaskUser() { return taskUser; }
     public void setTaskUser(String taskUser) { this.taskUser = taskUser; }
-    public boolean getTaskStatus() { return taskStatus; }
-    public void setTaskStatus(boolean taskStatus) { this.taskStatus = taskStatus; }
+    public Integer getTaskStatus() { return taskStatus; }
+    public void setTaskStatus(Integer taskStatus) { this.taskStatus = taskStatus; }
     public String getUserId() { return userId; }
     public void setUserId(String userId) { this.userId = userId; }
 }

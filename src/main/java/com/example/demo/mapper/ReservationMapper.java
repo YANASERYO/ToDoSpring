@@ -1,6 +1,5 @@
 package com.example.demo.mapper;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
@@ -18,9 +17,9 @@ public class ReservationMapper {
         copyReservationFields(reservation, entity);
 
         LocalDateTime now = LocalDateTime.now();
-        entity.setTaskStatus(false);
+        entity.setTaskStatus(0);
         entity.setTaskUpdate(now);
-        entity.setTaskDelete(now);
+        entity.setTaskDelete(null);
 
         return entity;
     }
@@ -34,24 +33,18 @@ public class ReservationMapper {
         entity.setTaskName(reservation.getTaskName());
         entity.setTaskContents(reservation.getTaskContents());
         entity.setTaskLimitdate(reservation.getTaskLimitdate());
-        entity.setTaskUpdate(reservation.getTaskUpdate());
-        entity.setTaskDelete(reservation.getTaskDelete());
         entity.setTaskUser(reservation.getTaskUser());
-        entity.setTaskStatus(reservation.getTaskStatus());
         entity.setUserId(reservation.getUserId());
     }
     
-    public Reservation toModel(ReservationForm reservationForm, LocalDate preferredDate) {
+    public Reservation toModel(ReservationForm reservationForm) {
         Reservation reservation = new Reservation();
 
         reservation.setTaskName(reservationForm.getTaskName());
         reservation.setTaskContents(reservationForm.getTaskContents());
-        reservation.setTaskLimitdate(reservationForm.getTaskLimitdate());
-        reservation.setTaskUpdate(reservationForm.getTaskUpdate());
-        reservation.setTaskDelete(reservationForm.getTaskDelete());
         reservation.setTaskUser(reservationForm.getTaskUser());
-        reservation.setTaskStatus(reservationForm.getTaskStatus());
         reservation.setUserId(reservationForm.getUserId());
+        reservation.setTaskStatus(false);
 
         return reservation;
     }

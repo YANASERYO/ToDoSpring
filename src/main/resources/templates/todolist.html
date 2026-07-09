@@ -1,10 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ToDo一覧</title>
 </head>
 <body>
+<h1>ToDo一覧</h1>
+<p>
+    <a href="/reservations/new">新しい予約を登録</a>
+</p>
+<!--<div class="count-area">-->
+<!--	<a th:href="@{/staff/reservations(filter='today')}">-->
+<!--	    今日の未祈願（<span th:text="${todayUnprayedCount}">0</span>）-->
+<!--	</a>-->
+<!--	<a th:href="@{/staff/reservations(filter='future')}">-->
+<!--	    翌日以降（<span th:text="${futureUnprayedCount}">0</span>）-->
+<!--	</a>-->
+<!--	<a th:href="@{/staff/reservations(filter='prayed')}">-->
+<!--	    祈願済（<span th:text="${prayedCount}">0</span>）-->
+<!--	</a>-->
+<!--	<a th:href="@{/staff/reservations(filter='all')}">-->
+<!--	    全件（<span th:text="${allCount}">0</span>）-->
+<!--	</a>-->
+<!--</div>-->
+<table border="1" class="reservation-table">
+	<tr>
+		<th>タスクID</th>
+		<th>タスク名称</th>
+		<th>タスク内容</th>
+		<th>タスク期限</th>
+		<th>最終更新日</th>
+		<th>タスク担当者</th>
+		<th>タスク状況</th>
+		<th>詳細</th>
+	</tr>
 
+	<tbody th:each="reservation : ${reservations}">
+		<tr>
+			<td th:text="${reservation.id}"></td>
+			<td th:text="${reservation.taskName}"></td>
+			<td th:text="${reservation.taskContents}"></td>
+			<td th:text="${reservation.taskLimitdate}"></td>
+			<td th:text="${reservation.taskUpdate}"></td>
+			<td th:text="${reservation.taskUser}"></td>
+<!--			<td th:text="${reservation.taskStatus ? '祈願済み' : '未祈願'}"></td>-->
+			<td>
+				<a th:href="@{/user/reservations/{id}(id=${reservation.id})}">詳細</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
 </body>
 </html>
