@@ -1,17 +1,21 @@
 package com.example.demo.model;
 
 public class LoginUser {
-	private Long userId;
-	private String staffName;
 
-	
-	public LoginUser(Long userId,String staffName,String role) {
-		this.userId = userId;
-		this.staffName = staffName;
+    private String userId;
+    private String userName;
 
-	}
+    public LoginUser() {
+    }
 
-	public Long getUserId() {return userId;}
-	public String getStaffName() {return staffName;}
+    public LoginUser(String userId, String userName) {
+        this.userId = userId;
+        this.userName = userName;
+    }
 
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
+
+    public String getUserName() { return userName; }
+    public void setUserName(String userName) { this.userName = userName; }
 }

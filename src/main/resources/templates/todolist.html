@@ -3,54 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ToDo一覧</title>
+<title>ToDoタスク一覧</title>
 </head>
 <body>
-<h1>ToDo一覧</h1>
-<p>
-    <a href="/reservations/new">新しい予約を登録</a>
-</p>
-<!--<div class="count-area">-->
-<!--	<a th:href="@{/staff/reservations(filter='today')}">-->
-<!--	    今日の未祈願（<span th:text="${todayUnprayedCount}">0</span>）-->
-<!--	</a>-->
-<!--	<a th:href="@{/staff/reservations(filter='future')}">-->
-<!--	    翌日以降（<span th:text="${futureUnprayedCount}">0</span>）-->
-<!--	</a>-->
-<!--	<a th:href="@{/staff/reservations(filter='prayed')}">-->
-<!--	    祈願済（<span th:text="${prayedCount}">0</span>）-->
-<!--	</a>-->
-<!--	<a th:href="@{/staff/reservations(filter='all')}">-->
-<!--	    全件（<span th:text="${allCount}">0</span>）-->
-<!--	</a>-->
-<!--</div>-->
-<table border="1" class="reservation-table">
-	<tr>
-		<th>タスクID</th>
-		<th>タスク名称</th>
-		<th>タスク内容</th>
-		<th>タスク期限</th>
-		<th>最終更新日</th>
-		<th>タスク担当者</th>
-		<th>タスク状況</th>
-		<th>詳細</th>
-	</tr>
 
-	<tbody th:each="reservation : ${reservations}">
-		<tr>
-			<td th:text="${reservation.id}"></td>
-			<td th:text="${reservation.taskName}"></td>
-			<td th:text="${reservation.taskContents}"></td>
-			<td th:text="${reservation.taskLimitdate}"></td>
-			<td th:text="${reservation.taskUpdate}"></td>
-			<td th:text="${reservation.taskUser}"></td>
-<!--			<td th:text="${reservation.taskStatus ? '祈願済み' : '未祈願'}"></td>-->
-			<td>
-				<a th:href="@{/user/reservations/{id}(id=${reservation.id})}">詳細</a>
-			</td>
-		</tr>
-	</tbody>
+<h1>ToDoタスク一覧</h1>
+
+<p>
+    ログインユーザー：
+    <span th:text="${loginUser.userName}">ユーザー名</span>
+</p>
+
+<p>
+    <a th:href="@{/reservations/new}">新規登録へ</a>
+</p>
+
+<p>
+    <a th:href="@{/menu}">メニューへ</a>
+</p>
+
+<table border="1" class="reservation-table">
+    <thead>
+        <tr>
+            <th>タスクID</th>
+            <th>タスク名称</th>
+            <th>タスク内容</th>
+            <th>タスク期限</th>
+            <th>最終更新日</th>
+            <th>タスク担当者</th>
+            <th>タスク状況</th>
+            <th>詳細画面</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr th:each="reservation : ${reservations}">
+            <td th:text="${reservation.id}">1</td>
+            <td th:text="${reservation.taskName}">タスク名称</td>
+            <td th:text="${reservation.taskContents}">タスク内容</td>
+            <td th:text="${reservation.taskLimitdate}">2026-07-09</td>
+            <td th:text="${reservation.taskUpdate}">2026-07-09</td>
+            <td th:text="${reservation.taskUser}">担当者</td>
+
+            <td>
+                <span th:switch="${reservation.taskStatus}">
+                    <span th:case="0">未着手</span>
+                    <span th:case="1">着手</span>
+                    <span th:case="2">凍結</span>
+                    <span th:case="3">中断</span>
+                    <span th:case="9">完了</span>
+                    <span th:case="*">不明</span>
+                </span>
+            </td>
+
+            <td>
+                <span th:if="${reservation.taskDelete != null}">
+                    削除済
+                </span>
+
+                <a th:if="${reservation.taskDelete == null and (reservation.taskStatus == 0 or reservation.taskStatus == 1 or reservation.taskStatus == 2)}"
+                   th:href="@{/reservations/{id}(id=${reservation.id})}">
+                    変更・削除へ
+                </a>
+
+                <a th:if="${reservation.taskDelete == null and (reservation.taskStatus == 3 or reservation.taskStatus == 9)}"
+                   th:href="@{/reservations/{id}(id=${reservation.id})}">
+                    変更へ
+                </a>
+            </td>
+        </tr>
+    </tbody>
 </table>
+
 </body>
 </html>

@@ -12,8 +12,8 @@
 		
 <!--		<p th:if="${errorMsg}" th:text="${errorMsg}"></p>-->
 		
-		<a href="/todolist">タスク一覧<br>
-		<a href="/todoform">タスク登録<br>
+		<a th:href="@{/reservations}">ToDoタスク一覧</a>
+		<a th:href="@{/reservations/new}">ToDoタスク登録</a>
 			
 		<form th:action="@{/logout}" method="post" style="display:inline;">
 			<button type="submit">ログアウト</button>

@@ -14,60 +14,51 @@ import com.example.demo.entity.UserAccountEntity;
 import com.example.demo.model.LoginUser;
 import com.example.demo.repository.UserAccountRepository;
 
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 public class LoginController {
-	
-	private final UserAccountRepository userAccountRepository;
-	
-	public LoginController(UserAccountRepository userAccountRepository) {
-        this.userAccountRepository = userAccountRepository;
-    }
 
-	@GetMapping("/")
-	public String showLoginForm() {
-	    return "index";
-	}
+    private final UserAccountRepository userAccountRepository;
+
+    @GetMapping("/")
+    public String showLoginForm() {
+        return "index";
+    }
 
     @PostMapping("/login")
     public String login(
-    		@RequestParam String userId,
-    		@RequestParam String password,
-    		HttpSession session,
-    		Model model) {
+            @RequestParam String userId,
+            @RequestParam String password,
+            HttpSession session,
+            Model model) {
 
+        Optional<UserAccountEntity> userOpt =
+                userAccountRepository.findByUsername(userId);
 
-    	Optional<UserAccountEntity> userOpt = userAccountRepository.findByUsername(userId);
+        if (userOpt.isPresent()) {
+            UserAccountEntity user = userOpt.get();
 
-    	if (userOpt.isPresent()) {
-    	    UserAccountEntity user = userOpt.get();
-
-    	    if (user.getPassword().equals(password)) {
-    	        LoginUser loginUser = new LoginUser(user.getId(), user.getUsername(), "STAFF");
-    	        session.setAttribute("loginUser", loginUser);
-    	        return "redirect:/menu";
-    	    }
-    	}
-    	model.addAttribute("errorMsg", "IDまたはパスワードが違います");
-    	return "index";
-    }
-	
-    @PostMapping("/logout")
-    public String logout(HttpSession session) {
-    	session.invalidate();
-    	return "redirect:/";
-    }
-    
-    @GetMapping("/menu")
-    public String showMenu(HttpSession session,Model model) {
-    	LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-
-        if (loginUser == null) {
-            return "redirect:/";
+            if (user.getPassword().equals(password) && Boolean.TRUE.equals(user.getEnabled())) {
+                LoginUser loginUser = new LoginUser(user.getUsername());
+                session.setAttribute("loginUser", loginUser);
+                return "redirect:/index";
+            }
         }
 
-        model.addAttribute("loginUser", loginUser);
+        model.addAttribute("errorMsg", "ユーザーIDまたはパスワードが違います");
+        return "index";
+    }
 
-        return "menu";
+    @GetMapping("/index")
+    public String showIndex() {
+        return "main";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
 }

@@ -11,14 +11,14 @@ public class Reservation {
 	private LocalDateTime taskUpdate;
 	private LocalDateTime taskDelete;
 	private String taskUser;
-	private boolean taskStatus;
+	private Integer taskStatus;
 	private String userId;
 
 //	引数なしのコンストラクタ
 	public Reservation() {
 	}
 
-	public Reservation(String taskName, String taskContents, LocalDate taskLimitdate, LocalDateTime taskUpdate, LocalDateTime taskDelete, String taskUser, boolean taskStatus, String userId) {
+	public Reservation(String taskName, String taskContents, LocalDate taskLimitdate, LocalDateTime taskUpdate, LocalDateTime taskDelete, String taskUser, Integer taskStatus, String userId) {
 	    this.taskName = taskName;
 	    this.taskContents = taskContents;
 	    this.taskLimitdate = taskLimitdate;
@@ -41,8 +41,8 @@ public class Reservation {
 	public void setTaskDelete(LocalDateTime taskDelete) { this.taskDelete = taskDelete; }
 	public String getTaskUser() { return taskUser; }
 	public void setTaskUser(String taskUser) { this.taskUser = taskUser; }
-	public boolean getTaskStatus() { return taskStatus; }
-	public void setTaskStatus(boolean taskStatus) { this.taskStatus = taskStatus; }
+	public Integer getTaskStatus() { return taskStatus; }
+	public void setTaskStatus(Integer taskStatus) { this.taskStatus = taskStatus; }
 	public String getUserId() { return userId; }
 	public void setUserId(String userId) { this.userId = userId; }
 }

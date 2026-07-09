@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" th:href="@{/css/common.css}">
-<link rel="stylesheet" th:href="@{/css/form.css}">
-<link rel="stylesheet" th:href="@{/css/responsive.css}">
+
 <title>ToDoフォーム</title>
 </head>
 <body>
@@ -16,19 +14,19 @@
 	<input type="text" id="" value="新規">
 	
     <label for="taskName">タスク名称</label>
-    <input type="text" id="taskName" th:field="*{taskName}">
+    <input type="text" id="taskName" th:field="*{reservation.taskName}">
 	
 	<label for="taskContents">タスク内容</label>
-	<input type="text" id="taskContents" th:field="*{taskContents}"><br><br>
+	<input type="text" id="taskContents" th:field="*{reservation.taskContents}"><br><br>
 	
 	<label for="taskLimitdate">タスク期限</label>
-	<input type="date" id="taskLimitdate" th:field="*{taskLimitdate}}" ><br><br>
+	<input type="date" id="taskLimitdate" th:field="*{reservation.taskLimitdate}}" ><br><br>
 	
 	<label for="taskUser">タスク担当者</label>
-	<input type="text" id="taskUser" th:field="*{taskUser}"><br><br>
+	<input type="text" id="taskUser" th:field="*{reservation.taskUser}"><br><br>
 	
     <label for="taskStatus">タスク状況</label>
-    <select id="taskStatus" th:field="*{taskStatus}">
+    <select id="taskStatus" th:field="*{reservation.taskStatus}">
         <option value="">選択してください</option>
         <option value="0">未着手</option>
         <option value="1">着手</option>
